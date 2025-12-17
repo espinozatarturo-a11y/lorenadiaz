@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorraine - Tienda y Salón</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            min-height: 100vh;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            position: relative;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(184, 134, 11, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+        }
+
+        .logo-container {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 35px;
+            animation: fadeInDown 1s ease;
+            text-align: center;
+        }
+
+        .custom-logo {
+            position: relative;
+            padding: 30px 40px;
+        }
+
+        .brand-name {
+            font-size: 68px;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            color: #daa520;
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            margin: 0 0 15px 0;
+            text-shadow: 
+                0 2px 10px rgba(218, 165, 32, 0.3),
+                0 0 30px rgba(218, 165, 32, 0.2),
+                0 5px 20px rgba(218, 165, 32, 0.4);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    0 2px 10px rgba(218, 165, 32, 0.3),
+                    0 0 30px rgba(218, 165, 32, 0.2),
+                    0 5px 20px rgba(218, 165, 32, 0.4);
+            }
+            to {
+                text-shadow: 
+                    0 2px 15px rgba(218, 165, 32, 0.5),
+                    0 0 40px rgba(218, 165, 32, 0.3),
+                    0 8px 30px rgba(218, 165, 32, 0.6);
+            }
+        }
+
+        .brand-subtitle {
+            font-size: 20px;
+            color: #c9a043;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .tagline {
+            font-size: 22px;
+            color: #daa520;
+            font-style: italic;
+            font-weight: 500;
+            max-width: 450px;
+            margin: 0 auto;
+            line-height: 1.5;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            padding: 20px 25px;
+            border-top: 2px solid rgba(218, 165, 32, 0.3);
+            border-bottom: 2px solid rgba(218, 165, 32, 0.3);
+        }
+
+        .buttons-container {
+            width: 100%;
+            max-width: 500px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 18px 30px;
+            margin: 14px 0;
+            background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 20px rgba(218, 165, 32, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .button:hover::before {
+            left: 100%;
+        }
+
+        .button:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 12px 30px rgba(218, 165, 32, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .button:active {
+            transform: translateY(-2px);
+        }
+
+        .button-icon {
+            font-size: 22px;
+            margin-right: 10px;
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%) !important;
+            box-shadow: 
+                0 8px 20px rgba(37, 211, 102, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .whatsapp-btn:hover {
+            box-shadow: 
+                0 12px 30px rgba(37, 211, 102, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            max-width: 850px;
+            margin: 50px auto;
+            padding: 45px;
+            border-radius: 25px;
+            position: relative;
+            box-shadow: 
+                0 25px 70px rgba(0, 0, 0, 0.6),
+                0 0 50px rgba(218, 165, 32, 0.2);
+            animation: modalSlideIn 0.4s ease;
+            border: 2px solid rgba(218, 165, 32, 0.2);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            font-weight: bold;
+            color: #daa520;
+            cursor: pointer;
+            transition: all 0.3s;
+            line-height: 1;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(218, 165, 32, 0.1);
+        }
+
+        .close:hover {
+            color: #b8860b;
+            background: rgba(218, 165, 32, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal h2 {
+            color: #daa520;
+            margin-bottom: 25px;
+            font-size: 32px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal h3 {
+            color: #b8860b;
+            margin-top: 30px;
+            margin-bottom: 18px;
+            font-size: 24px;
+        }
+
+        .modal p, .modal ul {
+            color: #333;
+            line-height: 1.9;
+            margin-bottom: 18px;
+            font-size: 17px;
+        }
+
+        .modal ul {
+            padding-left: 25px;
+        }
+
+        .modal li {
+            margin-bottom: 12px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .service-category {
+            background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .service-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-category h4 {
+            color: white;
+            margin-bottom: 18px;
+            font-size: 22px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-category ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-category li {
+            color: white;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 16px;
+        }
+
+        .service-category li:last-child {
+            border-bottom: none;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(218, 165, 32, 0.4);
+            border: 2px solid transparent;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 12px 30px rgba(218, 165, 32, 0.6);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .social-icon.facebook {
+            background: linear-gradient(135deg, #1877f2 0%, #0a5ac4 100%);
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.4);
+        }
+
+        .social-icon.facebook:hover {
+            box-shadow: 0 12px 30px rgba(24, 119, 242, 0.6);
+        }
+
+        .social-icon.instagram {
+            background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
+            box-shadow: 0 8px 20px rgba(225, 48, 108, 0.4);
+        }
+
+        .social-icon.instagram:hover {
+            box-shadow: 0 12px 30px rgba(225, 48, 108, 0.6);
+        }
+
+        .social-icon.maps {
+            background: linear-gradient(135deg, #4285F4 0%, #0F9D58 100%);
+            box-shadow: 0 8px 20px rgba(66, 133, 244, 0.4);
+        }
+
+        .social-icon.maps:hover {
+            box-shadow: 0 12px 30px rgba(66, 133, 244, 0.6);
+        }
+
+        .info-box {
+            text-align: center;
+            margin-top: 35px;
+            padding: 25px;
+            background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+            border-radius: 18px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-box p {
+            color: white;
+            margin: 8px 0;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 25px 15px;
+            }
+
+            .logo-container {
+                max-width: 380px;
+                margin-bottom: 30px;
+            }
+
+            .custom-logo {
+                padding: 20px 30px;
+            }
+
+            .brand-name {
+                font-size: 48px;
+                letter-spacing: 8px;
+                margin-bottom: 12px;
+            }
+
+            .brand-subtitle {
+                font-size: 16px;
+                letter-spacing: 3px;
+                margin-bottom: 15px;
+            }
+
+            .tagline {
+                font-size: 18px;
+                padding: 15px 20px;
+            }
+
+            .buttons-container {
+                max-width: 380px;
+            }
+
+            .button {
+                font-size: 17px;
+                padding: 18px 25px;
+                margin: 15px 0;
+            }
+
+            .modal-content {
+                padding: 35px 25px;
+                margin: 30px auto;
+            }
+
+            .modal h2 {
+                font-size: 26px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .close {
+                top: 15px;
+                right: 20px;
+                font-size: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-container {
+                max-width: 320px;
+            }
+
+            .brand-name {
+                font-size: 38px;
+                letter-spacing: 6px;
+            }
+
+            .brand-subtitle {
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+
+            .tagline {
+                font-size: 16px;
+                padding: 15px;
+            }
+
+            .buttons-container {
+                max-width: 320px;
+            }
+
+            .button {
+                font-size: 17px;
+                padding: 16px 25px;
+                margin: 12px 0;
+            }
+
+            .button-icon {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="logo-container">
+            <div class="custom-logo">
+                <div class="brand-name">Lorraine</div>
+                <div class="brand-subtitle">Peluquería • Belleza • Productos</div>
+                <div class="tagline">"El salón que te atiende cuando nadie más puede"</div>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <button class="button" onclick="openModal('quienesSomos')">
+                <span class="button-icon">✨</span>Quiénes Somos
+            </button>
+
+            <button class="button" onclick="openModal('redesSociales')">
+                <span class="button-icon">📱</span>Redes Sociales
+            </button>
+
+            <a href="https://wa.me/56974426406?text=Hola!%20Me%20gustaría%20agendar%20una%20hora%20en%20Lorraine%20✨" class="button whatsapp-btn" target="_blank">
+                <span class="button-icon">📅</span>Agendar Horas
+            </a>
+
+            <button class="button" onclick="openModal('servicios')">
+                <span class="button-icon">💇‍♀️</span>Servicios y Productos
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Quiénes Somos -->
+    <div id="quienesSomos" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('quienesSomos')">&times;</span>
+            <h2>✨ Quiénes Somos</h2>
+            <p>En nuestro salón creemos que la belleza es mucho más que un estilo: es confianza, cuidado y un espacio para sentirse especial.</p>
+            
+            <p>Soy Lorena, fundadora y estilista, con más de tres años de experiencia atendiendo de manera independiente en Rengo. Mi camino comenzó con la convicción de que cada persona merece un servicio personalizado, profesional y cercano. Gracias al apoyo de Cercotec, transformé mi pasión en un proyecto que hoy combina peluquería y tienda de productos de belleza, ofreciendo soluciones completas para el cuidado capilar, facial y corporal.</p>
+
+            <h3>💇‍♀️ Nuestra esencia</h3>
+            <ul>
+                <li><strong>Atención personalizada:</strong> cada cita es un espacio íntimo y tranquilo, dedicado exclusivamente a ti.</li>
+                <li><strong>Variedad de servicios:</strong> alisados permanentes, color, visos, balayage, cortes, peinados, maquillaje y más.</li>
+                <li><strong>Innovación y cuidado:</strong> trabajamos con productos libres de sulfatos, siliconas y parabenos, respetuosos con tu salud y el medio ambiente.</li>
+                <li><strong>Flexibilidad:</strong> atendemos en nuestro salón, a domicilio e incluso a personas con movilidad reducida o postradas, porque la belleza debe ser accesible para todos.</li>
+                <li><strong>Experiencia en venta de productos:</strong> champús, acondicionadores, tratamientos y maquillaje, siempre con asesoría para prolongar y potenciar tus resultados.</li>
+            </ul>
+
+            <h3>🌟 Nuestra visión</h3>
+            <p>Crecer hacia un espacio más amplio y profesional, donde podamos dar trabajo a otros especialistas y sumar servicios como barbería, manteniendo siempre la cercanía y el trato humano que nos caracteriza.</p>
+
+            <h3>💜 Nuestra misión</h3>
+            <p>Ofrecer un servicio de peluquería y belleza integral, profesional y confiable, que combine calidad técnica con calidez humana, para que cada cliente se sienta cuidado, escuchado y feliz con su imagen.</p>
+        </div>
+    </div>
+
+    <!-- Modal Redes Sociales -->
+    <div id="redesSociales" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('redesSociales')">&times;</span>
+            <h2>📱 Síguenos en Redes Sociales</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 18px;">Conéctate con nosotros y mantente al día con nuestras novedades, promociones y tips de belleza.</p>
+            
+            <div class="social-icons">
+                <a href="https://www.facebook.com/lorenabeatriz.diazdinamarca" target="_blank" class="social-icon facebook" title="Facebook">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/lorenadiazdin/" target="_blank" class="social-icon instagram" title="Instagram">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="https://www.google.com/maps/place/34%C2%B024'33.9%22S+70%C2%B051'47.9%22W/@-34.409405,-70.8658789,17z" target="_blank" class="social-icon maps" title="Google Maps">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 0C7.802 0 4.403 3.399 4.403 7.597c0 5.697 7.597 16.403 7.597 16.403s7.597-10.706 7.597-16.403C19.597 3.399 16.198 0 12 0zm0 11.5c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="info-box">
+                <p style="font-size: 20px; margin-bottom: 15px;"><strong>📍 Encuéntranos</strong></p>
+                <p style="font-size: 17px;">Diego Portales 159</p>
+                <p style="font-size: 17px;">Rengo - Centro</p>
+                <p style="font-size: 18px; margin-top: 15px;"><strong>☎️ +569 7442 6406</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Servicios -->
+    <div id="servicios" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('servicios')">&times;</span>
+            <h2>💇‍♀️ Servicios y Productos</h2>
+            
+            <div class="services-grid">
+                <div class="service-category">
+                    <h4>✂️ Servicios Capilares</h4>
+                    <ul>
+                        <li>Alisados fotónicos láser</li>
+                        <li>Alisados tradicionales</li>
+                        <li>Alisados de biotina</li>
+                        <li>Color</li>
+                        <li>Cubrimiento de canas</li>
+                        <li>Peinados sofisticados</li>
+                        <li>Balayage</li>
+                        <li>Masajes capilares con células madre</li>
+                        <li>Ondulación permanente</li>
+                    </ul>
+                </div>
+
+                <div class="service-category">
+                    <h4>✨ Cuidados & Belleza</h4>
+                    <ul>
+                        <li>Cuidado capilar</li>
+                        <li>Cuidado facial</li>
+                        <li>Cuidado corporal</li>
+                        <li>Maquillajes profesionales</li>
+                    </ul>
+                </div>
+
+                <div class="service-category">
+                    <h4>🛍️ Tienda de Productos</h4>
+                    <ul>
+                        <li>Productos para cuidado facial</li>
+                        <li>Productos para cuidado capilar</li>
+                        <li>Tratamientos especializados</li>
+                        <li>Maquillaje</li>
+                        <li>Y mucho más</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 30px;">
+                <p style="font-size: 18px; margin-bottom: 10px;"><em>Domingos también se atiende previa cita 😊</em></p>
+                <p style="font-size: 20px; margin-top: 15px;"><strong>📞 Agenda tu cita al WhatsApp</strong></p>
+                <p style="font-size: 22px; margin-top: 5px;"><strong>+569 7442 6406</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(e) {
+            const modals = document.getElementsByClassName('modal');
+            for (let modal of modals) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modals = document.getElementsByClassName('modal');
+                for (let modal of modals) {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
